@@ -29,7 +29,7 @@ function getPages(page, pageCount) {
 }
 
 function log(data){
-  log(data);
+  console.log(data);
 }
 
 const Dal = {
@@ -81,6 +81,7 @@ const Dal = {
             }).exec((err, data) => {
                 if (err) {
                     log(err)
+                    callBack({})
                 } else {
                     // log(res)
                     callBack({
@@ -105,7 +106,8 @@ const Dal = {
         //log('get model by id ...')
         db[TableName].findById(id,(err,data)=>{
           if(err){
-            log(err);
+            //log(err);
+            callBack({})
           }
           else{
             callBack(data)

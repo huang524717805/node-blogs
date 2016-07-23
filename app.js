@@ -5,6 +5,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
 var app = express();
 
@@ -21,19 +22,52 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var AdminUser = require('./models/AdminUser')
+/**
+ * 初始化项目的一些基础目录结构
+ * @param  {[type]}   req  [description]
+ * @param  {[type]}   res  [description]
+ * @param  {Function} next [description]
+ * @return {[type]}        [description]
+ */
+function initApp(req, res, next) {
+    /////判断目录是否存在
+    fs.exists('./public/uploads', function (d) {
+        if (d) {
+            console.log('上传目录已存在');
+            next();
+        }
+        else {
+            /////创建一个在项目根目录中创建一个notes目录
+            fs.mkdirSync('./public/uploads');
+            console.log('初始化上传目录完成');
+            next();
+        }
+    })
+}
 
-AdminUser.dal.getListByPage({},1,10,function(data){
-  console.log(data)
+app.get('/',initApp,(req,res)=>{
+  res.send('app启动');
+  //res.redirect('/student/list/1');
 })
-AdminUser.dal.findOneByFilter({user_name:"admin"},function(data){
-  console.log(data)
-})
+app.use('/common',require('./routes/common/common'))
+
+app.use('/admin/adminUser/',require('./routes/admin/admin_user'))
+
+
+
+// var AdminUser = require('./models/AdminUser')
+
+// AdminUser.dal.getListByPage({},1,10,function(data){
+//   console.log(data)
+// })
+// AdminUser.dal.findOneByFilter({user_name:"admin"},function(data){
+//   console.log(data)
+// })
 // AdminUser.dal.getModel('123')
 // AdminUser.dal.findByID();
 // console.dir(AdminUser)
 
-var NoteFolder = require('./models/NoteFolder')
+// var NoteFolder = require('./models/NoteFolder')
 // console.dir(NoteFolder)
 // NoteFolder.dal.getModel('123')
 

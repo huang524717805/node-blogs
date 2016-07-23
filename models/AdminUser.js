@@ -50,5 +50,6 @@ dal.findByID = function(){
 
 
 module.exports = {
-    dal: dal
+    dal: dal,
+    db:db.db
 }
