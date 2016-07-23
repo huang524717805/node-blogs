@@ -84,21 +84,19 @@ router.post('/editor/:id', function(req, res, next) {
 });
 
 ///////删除操作
-router.post('/delete',function(req,res,next)){
-  if (req.body.id) {
-      AdminUser.dal.remove(req.body.id, (data) => {
-          if (data) {
-              console.log('删除成功');
-          }
-          else{
-            console.log('删除失败')
-          }
-          res.redirect('/admin/adminUser/1');
-      })
-  }
-  else {
-      res.redirect('/admin/adminUser/1');
-  }
-}
+router.post('/delete', function(req, res, next) {
+    if (req.body.id) {
+        AdminUser.dal.remove(req.body.id, (data) => {
+            if (data) {
+                console.log('删除成功');
+            } else {
+                console.log('删除失败')
+            }
+            res.redirect('/admin/adminUser/1');
+        })
+    } else {
+        res.redirect('/admin/adminUser/1');
+    }
+})
 
 module.exports = router;

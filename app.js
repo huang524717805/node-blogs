@@ -22,6 +22,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//////kindeditor测试部分内容
+app.use('/',require('./routes/common/kindeditor/demo'));
+/////kindeditor文件上传部分代码
+app.use('/common/kindeditor', require('./routes/common/kindeditor/index'));
+
 /**
  * 初始化项目的一些基础目录结构
  * @param  {[type]}   req  [description]
@@ -44,6 +49,18 @@ function initApp(req, res, next) {
         }
     })
 }
+
+/**
+ * 通过此方法判断是访问的管理后台目录,在此处做用户是否登录的权限判断
+ * [all description]
+ * @param  {[type]} '/admin/*'    [description]
+ * @param  {[type]} (req,res,next [description]
+ * @return {[type]}               [description]
+ */
+app.all('/admin/*',(req,res,next)=>{
+  console.log('这里访问的是管理后台...')
+  next()
+})
 
 app.get('/',initApp,(req,res)=>{
   res.send('app启动');
