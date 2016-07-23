@@ -9,36 +9,59 @@ const crypto = require('crypto')
 const md5 = crypto.createHash('md5')
 
 
-/* GET users listing. */
+//////列表页
 router.get('/:page', function(req, res, next) {
     //res.send('respond with a resource');
+    //
+    var filter = {}
 
-    AdminUser.dal.getListByPage({}, 1, 10, function(data) {
+    var user_name = req.query.user_name
+    var mobile = req.query.mobile
+
+    if (!!user_name) {
+        filter.user_name = {
+            '$regex': `.*?${user_name}.*?`
+        }
+    }
+
+    if (!!mobile) {
+        filter.mobile = {
+            '$regex': `.*?${mobile}.*?`
+        };
+    }
+
+    AdminUser.dal.getListByPage(filter, 1, 10, function(data) {
         data.title = "管理员信息管理"
+        data.query = req.query
         res.render('admin/admin_user/index', data)
     })
 
 
 });
 
+/////编辑页面 添加和修改在一起
 router.get('/editor/:id', function(req, res, next) {
     AdminUser.dal.getModelById(req.params.id, (data) => {
         if (data.id) {
             data.title = '信息编辑'
-            res.render('admin/admin_user/editor', {data:data})
+            res.render('admin/admin_user/editor', {
+                data: data
+            })
         } else {
             // res.send('err')
             data = new AdminUser.db.AdminUser()
-            // data = data.toObject()
-            // data.id = data._id
-            // delete data._id
+                // data = data.toObject()
+                // data.id = data._id
+                // delete data._id
             data.isAdd = true /////是否为新增,如果是新增 为密码添加验证规则
             data.title = '信息编辑'
-            res.render('admin/admin_user/editor', {data:data})
+            res.render('admin/admin_user/editor', {
+                data: data
+            })
         }
     })
 });
-
+//////编辑表单提交
 router.post('/editor/:id', function(req, res, next) {
     var model = req.body;
 
@@ -59,5 +82,23 @@ router.post('/editor/:id', function(req, res, next) {
         }
     })
 });
+
+///////删除操作
+router.post('/delete',function(req,res,next)){
+  if (req.body.id) {
+      AdminUser.dal.remove(req.body.id, (data) => {
+          if (data) {
+              console.log('删除成功');
+          }
+          else{
+            console.log('删除失败')
+          }
+          res.redirect('/admin/adminUser/1');
+      })
+  }
+  else {
+      res.redirect('/admin/adminUser/1');
+  }
+}
 
 module.exports = router;
