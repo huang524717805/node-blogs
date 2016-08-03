@@ -18,24 +18,33 @@ var AdminUser = db.model('admin_user',{
     remarks:{type:String,default:""},
     avatar:{type:String,default:""},
     create_time:{type:Date,default:Date.now},
-    updated_time:{type:Date,default:Date.now}
+    update_time:{type:Date,default:Date.now}
 })
 
-var NoteFolder = db.model('note_folder',{
+var BlogType = db.model('blog_type',{
   name:{type:String,required:true},
+  order_num:{type:Number,default:0},
+  img:{type:String,default:""},
   remarks:{type:String,default:""},
   create_time:{type:Date,default:Date.now},
-  updated_time:{type:Date,default:Date.now}
+  update_time:{type:Date,default:Date.now}
 })
 
-var Note = db.model('note',{
+var Blog = db.model('blog',{
+  title:{type:String,default:""},
+  type:{type:String,default:""},
+  description:{type:String,default:""},
+  tags:{type:String,default:""},
+  img:{type:String,default:""},
+  view_times:{type:Number,default:0},
   content:{type:String,default:""},
   create_time:{type:Date,default:Date.now},
-  updated_time:{type:Date,default:Date.now},
-  type:{type:'ObjectId',ref:NoteFolder}
+  update_time:{type:Date,default:Date.now}
 })
 
 /////模块导出
 module.exports = {
-    AdminUser:AdminUser
+    AdminUser:AdminUser,
+    BlogType:BlogType,
+    Blog:Blog
 }

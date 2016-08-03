@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //////kindeditor测试部分内容
-app.use('/',require('./routes/common/kindeditor/demo'));
+app.use('/', require('./routes/common/kindeditor/demo'));
 /////kindeditor文件上传部分代码
 app.use('/common/kindeditor', require('./routes/common/kindeditor/index'));
 
@@ -50,6 +50,58 @@ function initApp(req, res, next) {
     })
 }
 
+var AdminUser = require('./models/AdminUser')
+////引入crypto模块
+const crypto = require('crypto')
+app.get('/admin/login', (req, res) => {
+    res.render('admin/login')
+})
+app.post('/admin/user/login', (req, res) => {
+    AdminUser.dal.findOneByFilter({ user_name: req.body.userName }, function (data) {
+        console.log(data)
+        if (data) {
+            const md5 = crypto.createHash('md5')
+            var pwd = req.body.pwd
+            /////对密码进行处理 是否加密做操作
+            if (data.is_encrypt == 1) {
+                pwd = md5.update(pwd).digest('hex').toString()
+            }
+            if (pwd == data.pwd) {
+                /////登陆成功后把id写入cookie
+                res.cookie('user', data.id, { path: '/' })
+                res.json({ status: 'y', msg: '登陆成功' })
+            }
+            else {
+                res.json({ status: 'n', msg: '密码错误' })
+            }
+        }
+        else {
+            res.json({ status: 'n', msg: '用户信息不存在' })
+        }
+    })
+})
+app.get('/admin/validateUser', (req, res) => {
+    AdminUser.dal.findOneByFilter({ user_name: req.query.user_name }, function (data) {
+        console.log(data)
+        if (data) {
+            res.send('false')
+        }
+        else {
+            res.send('true')
+        }
+    });
+})
+app.get('/admin/getLoginedUser', (req, res) => {
+    AdminUser.dal.getModelById(req.cookies.user, function (data) {
+        if (data) {
+            res.json({status:'y',msg:'获取数据成功',data:{user_name:data.user_name,avatar:data.avatar}})
+        }
+        else {
+            res.json({status:'n',msg:'获取数据失败'})
+        }
+    })
+})
+
 /**
  * 通过此方法判断是访问的管理后台目录,在此处做用户是否登录的权限判断
  * [all description]
@@ -57,19 +109,34 @@ function initApp(req, res, next) {
  * @param  {[type]} (req,res,next [description]
  * @return {[type]}               [description]
  */
-app.all('/admin/*',(req,res,next)=>{
-  console.log('这里访问的是管理后台...')
-  next()
+app.all('/admin/*', (req, res, next) => {
+    console.log('这里访问的是管理后台...')
+    if (req.cookies.user) {
+        ////判断cookie是否存在 根据cookie取数据
+        AdminUser.dal.getModelById(req.cookies.user, function (data) {
+            if (data) {
+                next()
+            }
+            else {
+                res.redirect('/admin/login')
+            }
+        })
+    }
+    else {
+        res.redirect('/admin/login')
+    }
+
 })
 
-app.get('/',initApp,(req,res)=>{
-  res.send('app启动');
-  //res.redirect('/student/list/1');
+app.get('/', initApp, (req, res) => {
+    res.send('app启动');
+    //res.redirect('/student/list/1');
 })
-app.use('/common',require('./routes/common/common'))
+app.use('/common', require('./routes/common/common'))
 
-app.use('/admin/adminUser/',require('./routes/admin/admin_user'))
-
+app.use('/admin/adminUser/', require('./routes/admin/admin_user'))
+app.use('/admin/blogType/',require('./routes/admin/blog_type'))
+app.use('/admin/blog/',require('./routes/admin/blog'))
 
 
 // var AdminUser = require('./models/AdminUser')
@@ -89,6 +156,6 @@ app.use('/admin/adminUser/',require('./routes/admin/admin_user'))
 // NoteFolder.dal.getModel('123')
 
 
-app.listen(3001,(req,res)=>{
-  console.log('服务器运行中...');
+app.listen(3001, (req, res) => {
+    console.log('服务器运行中...');
 })

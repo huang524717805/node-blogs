@@ -8,9 +8,13 @@ const TableName = "AdminUser"
 
 
 
-db.dal.setTableName(TableName)
+// db.dal.setTableName(TableName)
 
-var dal = Object.create(db.dal);
+//var adminUser = new db.dal(TableName)
+
+
+var dal = new db.dal(TableName)//Object.create(db.dal);
+// dal.setTableName(TableName)
 
 /**
  * AdminUser 模型
@@ -27,7 +31,7 @@ db.db[TableName].count({
         console.log(err)
     } else {
         if (res == 0) {
-            var user = new db[TableName]({
+            var user = new db.db[TableName]({
                 user_name: "admin",
                 pwd: "admin",
                 is_encrypt: 0
