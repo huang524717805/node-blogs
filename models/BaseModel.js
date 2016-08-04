@@ -35,6 +35,7 @@ function log(data) {
 
 class Dal {
 
+  /////class初始化的时候执行的函数
   constructor(tableName){
     this.TableName = tableName
   }
@@ -125,7 +126,7 @@ class Dal {
    * 查找模型并进行更新
    * @param  {[string]} id       [ObjectId]
    * @param  {[object]} data     [需要更新到模型中的数据]
-   * @param  {[bool]} upsert   [如果不存在是否新增]
+   * @param  {[bool]} upsert   [true 如果不存在则新增]
    * @param  {[function]} callBack [回调函数,返回参数为true或者false]
    * @return {[type]}          [description]
    */

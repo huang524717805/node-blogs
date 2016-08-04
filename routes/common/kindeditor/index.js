@@ -5,6 +5,7 @@
  */
 var express = require('express');
 var router = express.Router();
+////接收form表单数据的中间件
 var formidable = require('formidable');
 
 
@@ -21,7 +22,7 @@ router.post('/uploadImg', function(req, res, next) {
         }
 
         var image = files.imgFile;
-        var path = image.path;
+        var path = image.path; ////路径 包含文件名
         //console.log("替换之前的path:"+path);
         path = path.replace(/\\/g, '/');
         //console.log(path);

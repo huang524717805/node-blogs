@@ -125,7 +125,6 @@ app.all('/admin/*', (req, res, next) => {
     else {
         res.redirect('/admin/login')
     }
-
 })
 
 app.get('/', initApp, (req, res) => {

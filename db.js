@@ -13,7 +13,7 @@ var AdminUser = db.model('admin_user',{
     name:{type:String,default:""},
     user_name:{type:String,required:true},
     pwd:{type:String,default:""},
-    is_encrypt:{type:Number,default:1},
+    is_encrypt:{type:Number,default:1}, /////定义用户密码是否加密,默认是加密的
     mobile:{type:String,default:""},
     remarks:{type:String,default:""},
     avatar:{type:String,default:""},

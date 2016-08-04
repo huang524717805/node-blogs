@@ -8,6 +8,26 @@ var router = express.Router();
 router.get('/:page?', function (req, res, next) {
     //res.send('respond with a resource');
     //
+
+    // db.Bolg.find().count((err,totalCount)=>{
+    //     if(err){
+
+    //     }
+    //     else{
+    //         db.Blog.find().exec((err,data)=>{
+    //             if(err){
+
+    //             }
+    //             else{
+
+
+    //                 /////写处理函数
+
+    //             }
+    //         })
+    //     }
+    // })
+
     var filter = {}
 
     var title = req.query.title
