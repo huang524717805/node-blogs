@@ -32,4 +32,9 @@ $(function(){
         $('#adminUserAvatar').attr("alt",res.data.adminUserName)
         $('#adminUserName').text(res.data.user_name)
     })
+
+    $('#logOut').click(function(){
+        $.removeCookie('user',{path:'/'})
+        window.location.reload()
+    })
 })

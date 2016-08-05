@@ -138,7 +138,19 @@ app.use('/admin/blogType/',require('./routes/admin/blog_type'))
 app.use('/admin/blog/',require('./routes/admin/blog'))
 
 
-// var AdminUser = require('./models/AdminUser')
+ var AdminUser = require('./models/AdminUser')
+
+// AdminUser.dal.findByFilter({},(data)=>{
+    
+//     data = data.map(function(item){
+//         item = item.toObject()
+//         item.kk = 123
+//         return item
+//     })
+//     // console.log(data)
+//     /////对查询结果进行过滤 使用filter的回调函数
+//     console.log(data.filter(function(k){return k.user_name == 'admin'})[0])
+// })
 
 // AdminUser.dal.getListByPage({},1,10,function(data){
 //   console.log(data)

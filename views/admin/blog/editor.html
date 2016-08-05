@@ -195,11 +195,13 @@
         /**
          * 初始化页面需要验证的内容
          */
-        var rulePwd = {};
-        {{if data.isAdd}}
-        rulePwd = {required:true,minlength:6}
-        {{/if}}
         $(function() {
+
+            {{if data.type}}
+             $('#type').val('{{data.type}}')
+            {{/if}}
+           
+
             $("#mainForm").validate({
                 rules: {
                     title: {
