@@ -53,6 +53,7 @@ function initApp(req, res, next) {
 var AdminUser = require('./models/AdminUser')
 ////引入crypto模块
 const crypto = require('crypto')
+////登录页面
 app.get('/admin/login', (req, res) => {
     res.render('admin/login')
 })
@@ -68,6 +69,7 @@ app.post('/admin/user/login', (req, res) => {
             }
             if (pwd == data.pwd) {
                 /////登陆成功后把id写入cookie
+                /////此处注意写cookie的path参数
                 res.cookie('user', data.id, { path: '/' })
                 res.json({ status: 'y', msg: '登陆成功' })
             }
@@ -127,6 +129,7 @@ app.all('/admin/*', (req, res, next) => {
     }
 })
 
+/////如果静态目录中没有index.html会走此处.前提是静态目录配置放在此代码前面
 app.get('/', initApp, (req, res) => {
     res.send('app启动');
     //res.redirect('/student/list/1');
@@ -137,10 +140,11 @@ app.use('/admin/adminUser/', require('./routes/admin/admin_user'))
 app.use('/admin/blogType/',require('./routes/admin/blog_type'))
 app.use('/admin/blog/',require('./routes/admin/blog'))
 
+////app.all('/api/*')
 app.use('/api',require('./routes/api/index'))
 
 
- var AdminUser = require('./models/AdminUser')
+var AdminUser = require('./models/AdminUser')
 
 // AdminUser.dal.findByFilter({},(data)=>{
 

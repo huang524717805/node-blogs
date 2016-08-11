@@ -2,13 +2,15 @@ angular.module('blog').controller('indexCtrl', ['$scope', 'bolgService', '$route
   $scope.maxPage = 1
   $scope.page = $routeParams.page || 1  ////当前页码
   $scope.type = $routeParams.type || 0  ///当前分类
-  $scope.showLoadMore = true
+  $scope.showLoadMore = true ////是否显示加载更多按钮
+  ////获取所有的分类信息
   service.getTypeData().then(function (res) {
-
     $scope.typeData = res.data
   })
 
+  /////分页形式获取当前页的数据
   service.getDataByPage($scope.type, $scope.page).then(function (res) {
+    /////对返回的数据做处理 为title和img赋默认值
     res.data.data = res.data.data.map(function (item) {
       if (!!!item.img) {
         item.img = '/images/chilinglin.jpg'
@@ -18,11 +20,11 @@ angular.module('blog').controller('indexCtrl', ['$scope', 'bolgService', '$route
       }
       return item
     })
-    $scope.blogData = res.data.data
+    $scope.blogData = res.data.data ///页面中需要展示的blog数据
     $scope.maxPage = res.data.pageCount /////最大页码数
   })
 
-  /////加载更多
+  /////加载更多事件
   $scope.loadMore = function () {
     if ($scope.page < $scope.maxPage) {
       $scope.page++
@@ -36,13 +38,13 @@ angular.module('blog').controller('indexCtrl', ['$scope', 'bolgService', '$route
           }
           return item
         })
+        ////concat关联两个数组
         $scope.blogData = $scope.blogData.concat(res.data.data)
         // $scope.maxPage.data.pageCount
       })
     }
     else {
-      $scope.showLoadMore = false
+      $scope.showLoadMore = false ////隐藏加载按钮
     }
-
   }
 }])

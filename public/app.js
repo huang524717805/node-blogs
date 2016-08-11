@@ -15,7 +15,7 @@ angular.module('blog').config(['$routeProvider', function($routeProvider) {
             templateUrl: 'app/tpl/detail.html',
             controller: 'detailCtrl'
         })
-        .otherwise({
+        .otherwise({ ////otherwise表示所有的路由都匹配不到的时候执行此处
             redirectTo: '/'
         })
 }])

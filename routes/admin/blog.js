@@ -43,15 +43,23 @@ router.get('/:page?', function (req, res, next) {
         filter.type = type
     }
     var page = Number(req.params.page) || 1;
+    ////查询所有的blog_types数据
     BlogType.dal.findByFilter({}, (typeData) => {
+        ///从blogs集合中取数据
         Blog.dal.getListByPage(filter, page, 1, function (data) {
             data.data = data.data.map(function (item) {
                 item = item.toObject() /////把item转换为js对象
                 try {
                     item.typeName = "暂无分类"
                     /////对type分类数据进行筛选
+                    /////filter是一个js的筛选
+                    /////回调函数中的temType为typeData数据的遍历
+                    ////筛选结果为一个数组
                     item.typeName = typeData.filter(function (temType) {
-                        return item.type == temType._id
+                        ////筛选条件
+                        //当我blog.type的值和我当前temType._id的值相等的时候
+                        //结束筛选 返回筛选结果 返回的是一个temType对象
+                        return item.type == temType._id ////
                     })[0].name
                 }
                 catch (ex) {
@@ -73,7 +81,7 @@ router.get('/:page?', function (req, res, next) {
 /////编辑页面 添加和修改在一起
 router.get('/editor/:id', function (req, res, next) {
     BlogType.dal.findByFilter({}, (type_data) => {
-        type = type_data
+        type = type_data ////此处的type是分类信息 传递到页面上当参数使用
         Blog.dal.getModelById(req.params.id, (data) => {
             if (data.id) {
                 // data.title = '信息编辑'

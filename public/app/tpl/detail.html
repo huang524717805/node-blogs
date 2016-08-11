@@ -26,6 +26,7 @@
 <div class="main-container container">
   <div class="row">
     <div class="col-12 article">
+        <!--此处使用ngSanitize绑定html代码-->
       <p ng-bind-html="blogData.content"></p>
       <!--{{blogData.content}}-->
     </div>

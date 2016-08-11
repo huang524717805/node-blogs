@@ -74,7 +74,7 @@ router.get('/detail/:id', (req, res) => {
     // data.id = data._id.toString() ////把属相_id赋值给id
     // delete data._id ////删除原来的_id属性
     // console.log(data.view_times+1)
-    ////在更新的时候通过$inc的方式直接实现魔鳄一个字段的增加操作
+    ////在更新的时候通过$inc的方式直接实现某一个字段的增加操作
     Blog.dal.update(req.params.id,{'$inc':{'view_times':1}},false,(res)=>{console.log(res)})
     data = toObject(data)
     res.json({ status: "y", msg: "获取数据成功", data: data })
