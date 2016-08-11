@@ -137,11 +137,13 @@ app.use('/admin/adminUser/', require('./routes/admin/admin_user'))
 app.use('/admin/blogType/',require('./routes/admin/blog_type'))
 app.use('/admin/blog/',require('./routes/admin/blog'))
 
+app.use('/api',require('./routes/api/index'))
+
 
  var AdminUser = require('./models/AdminUser')
 
 // AdminUser.dal.findByFilter({},(data)=>{
-    
+
 //     data = data.map(function(item){
 //         item = item.toObject()
 //         item.kk = 123
