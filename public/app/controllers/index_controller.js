@@ -1,4 +1,4 @@
-angular.module('blog').controller('indexCtrl', ['$scope', 'bolgService', '$routeParams', function ($scope, service, $routeParams) {
+angular.module('blog').controller('indexCtrl', ['$scope', 'blogService', '$routeParams', function ($scope, service, $routeParams) {
   $scope.maxPage = 1
   $scope.page = $routeParams.page || 1  ////当前页码
   $scope.type = $routeParams.type || 0  ///当前分类

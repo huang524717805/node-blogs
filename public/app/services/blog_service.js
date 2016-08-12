@@ -1,4 +1,4 @@
-angular.module('blog').factory('bolgService',['$http','$q',function($http,$q){
+angular.module('blog').factory('blogService',['$http','$q',function($http,$q){
   var dal = {}
 
   /**

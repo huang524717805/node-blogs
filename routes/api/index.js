@@ -18,12 +18,13 @@ function toObject(data){
 
   // console.log(data.content)
   //
-  // if(data.content){
-  //   var reg = new RegExp(/^src="\/uploads/,'g')
-  //   console.log(reg.test(data.content))
-  //   console.log('已经匹配到')
-  //   data.content = data.content.replace(/^src="\/uploads$/,'src="http://localhost:3001/uploads')
-  // }
+  if(data.content){
+    /////匹配content中所有的src 修改为加上服务器地址
+    var reg = new RegExp(/src="\/uploads/,'g')
+    //console.log(reg.test(data.content))
+    //console.log('已经匹配到')
+    data.content = data.content.replace(reg,'src="http://localhost:3001/uploads')
+  }
   return data
 }
 
@@ -47,8 +48,11 @@ router.get('/get_all_data/:type/:page?', (req, res) => {
   var page = Number(req.params.page) || 1;
   BlogType.dal.findByFilter({}, (typeData) => {
     Blog.dal.getListByPage(filter, page, 1, function (data) {
+
+      data.data = toArray(data.data)
+
       data.data = data.data.map(function (item) {
-        item = item.toObject() /////把item转换为js对象
+        
         try {
           item.typeName = "暂无分类"
           /////对type分类数据进行筛选
@@ -57,10 +61,7 @@ router.get('/get_all_data/:type/:page?', (req, res) => {
           })[0].name
         }
         catch (ex) {
-        }
-
-        item.id = item._id.toString() ////把属相_id赋值给id
-        delete item._id ////删除原来的_id属性
+        }        
         return item
       })
       res.json({ status: "y", msg: "获取数据成功", data: data })

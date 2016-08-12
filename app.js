@@ -141,6 +141,7 @@ app.use('/admin/blogType/',require('./routes/admin/blog_type'))
 app.use('/admin/blog/',require('./routes/admin/blog'))
 
 app.all('/api/*',(req,res,next)=>{
+    // console.log(req.hostname+":"+req.port)
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
