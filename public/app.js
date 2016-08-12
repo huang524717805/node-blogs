@@ -1,6 +1,13 @@
 //console.log(angular)
 angular.module('blog', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
+////定义全局导航控制器
+angular.module('blog').controller('navCtrl',['$scope','bolgService',function($scope,service){
+    service.getTypeData().then(function(res){
+        $scope.typeData = res.data
+    })
+}])
+
 angular.module('blog').config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/',{

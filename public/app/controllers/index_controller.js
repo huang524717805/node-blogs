@@ -4,9 +4,9 @@ angular.module('blog').controller('indexCtrl', ['$scope', 'bolgService', '$route
   $scope.type = $routeParams.type || 0  ///当前分类
   $scope.showLoadMore = true ////是否显示加载更多按钮
   ////获取所有的分类信息
-  service.getTypeData().then(function (res) {
-    $scope.typeData = res.data
-  })
+  // service.getTypeData().then(function (res) {
+  //   $scope.typeData = res.data
+  // })
 
   /////分页形式获取当前页的数据
   service.getDataByPage($scope.type, $scope.page).then(function (res) {

@@ -9,6 +9,21 @@ function toObject(data){
   data.id = data._id
   delete data._id
   delete data._v
+
+  if(data.img){
+    if(!data.img.startsWith('http://')){
+      data.img = "http://localhost:3001"+data.img
+    }
+  }
+
+  // console.log(data.content)
+  //
+  // if(data.content){
+  //   var reg = new RegExp(/^src="\/uploads/,'g')
+  //   console.log(reg.test(data.content))
+  //   console.log('已经匹配到')
+  //   data.content = data.content.replace(/^src="\/uploads$/,'src="http://localhost:3001/uploads')
+  // }
   return data
 }
 
