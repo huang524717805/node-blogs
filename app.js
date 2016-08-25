@@ -1,6 +1,4 @@
-/**
- * Created by yuluo on 16/07/23.
- */
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -141,7 +139,6 @@ app.use('/admin/blogType/',require('./routes/admin/blog_type'))
 app.use('/admin/blog/',require('./routes/admin/blog'))
 
 app.all('/api/*',(req,res,next)=>{
-    // console.log(req.hostname+":"+req.port)
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
@@ -153,32 +150,6 @@ app.use('/api',require('./routes/api/index'))
 
 
 var AdminUser = require('./models/AdminUser')
-
-// AdminUser.dal.findByFilter({},(data)=>{
-
-//     data = data.map(function(item){
-//         item = item.toObject()
-//         item.kk = 123
-//         return item
-//     })
-//     // console.log(data)
-//     /////对查询结果进行过滤 使用filter的回调函数
-//     console.log(data.filter(function(k){return k.user_name == 'admin'})[0])
-// })
-
-// AdminUser.dal.getListByPage({},1,10,function(data){
-//   console.log(data)
-// })
-// AdminUser.dal.findOneByFilter({user_name:"admin"},function(data){
-//   console.log(data)
-// })
-// AdminUser.dal.getModel('123')
-// AdminUser.dal.findByID();
-// console.dir(AdminUser)
-
-// var NoteFolder = require('./models/NoteFolder')
-// console.dir(NoteFolder)
-// NoteFolder.dal.getModel('123')
 
 
 app.listen(3001, (req, res) => {

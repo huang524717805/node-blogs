@@ -1,4 +1,3 @@
-//console.log(angular)
 angular.module('blog', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
 ////定义全局导航控制器

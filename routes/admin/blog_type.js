@@ -5,8 +5,7 @@ var router = express.Router();
 
 //////列表页
 router.get('/:page?', function (req, res, next) {
-    //res.send('respond with a resource');
-    //
+
     var filter = {}
 
     var name = req.query.name

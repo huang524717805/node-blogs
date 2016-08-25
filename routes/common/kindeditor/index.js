@@ -1,5 +1,4 @@
 /**
- * Created by yuluo on 16/7/2.
  *
  * kindeditor文件上传控制器
  */

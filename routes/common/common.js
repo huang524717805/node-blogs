@@ -1,6 +1,3 @@
-/**
- * Created by yuluo on 16/6/21.
- */
 var express = require('express')
 
 var fs = require('fs')

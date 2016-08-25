@@ -16,18 +16,13 @@ function toObject(data){
     }
   }
 
-  // console.log(data.content)
-  //
   if(data.content){
     /////匹配content中所有的src 修改为加上服务器地址
     var reg = new RegExp(/src="\/uploads/,'g')
-    //console.log(reg.test(data.content))
-    //console.log('已经匹配到')
     data.content = data.content.replace(reg,'src="http://localhost:3001/uploads')
   }
   return data
 }
-
 function toArray(arr){
   return arr.map(function(item){
     return toObject(item)
@@ -72,12 +67,6 @@ router.get('/get_all_data/:type/:page?', (req, res) => {
 ////获取所有的分类信息
 router.get('/get_types', (req, res) => {
   BlogType.dal.findByFilter({}, (typeData) => {
-    // typeData = typeData.map(function (item) {
-    //   item = item.toObject()
-    //   item.id = item._id.toString() ////把属相_id赋值给id
-    //   delete item._id ////删除原来的_id属性
-    //   return item
-    // })
     typeData = toArray(typeData)
     res.json({ status: "y", msg: "获取数据成功", data: typeData })
   })
@@ -86,10 +75,6 @@ router.get('/get_types', (req, res) => {
 ////根据id查询文章信息
 router.get('/detail/:id', (req, res) => {
   Blog.dal.getModelById(req.params.id, (data) => {
-    // data = data.toObject()
-    // data.id = data._id.toString() ////把属相_id赋值给id
-    // delete data._id ////删除原来的_id属性
-    // console.log(data.view_times+1)
     ////在更新的时候通过$inc的方式直接实现某一个字段的增加操作
     Blog.dal.update(req.params.id,{'$inc':{'view_times':1}},false,(res)=>{console.log(res)})
     data = toObject(data)

@@ -8,8 +8,7 @@ const crypto = require('crypto')
 
 //////列表页
 router.get('/:page?', function (req, res, next) {
-    //res.send('respond with a resource');
-    //
+
     var filter = {}
 
     var user_name = req.query.user_name
@@ -43,11 +42,7 @@ router.get('/editor/:id', function (req, res, next) {
                 data: data
             })
         } else {
-            // res.send('err')
             data = new AdminUser.db.AdminUser()
-            // data = data.toObject()
-            // data.id = data._id
-            // delete data._id
             data.isAdd = true /////是否为新增,如果是新增 为密码添加验证规则
             data.title = '信息编辑'
             res.render('admin/admin_user/editor', {

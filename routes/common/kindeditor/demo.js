@@ -1,5 +1,4 @@
 /**
- * Created by yuluo on 16/7/2.
  *
  * kindeditor 编辑器使用demo
  * 访问地址为 :http://localhost:3000/demo/kindeditor
